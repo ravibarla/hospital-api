@@ -27,6 +27,10 @@ export const getDoctors = (req, res) => {
   );
 };
 
+export const getDoctorById = (id) => {
+  console.log("id :", id);
+};
+
 export const removeDoctor = (req, res) => {
   // console.log("id :", id);
   const { id } = req.params;

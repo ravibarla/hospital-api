@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Doctor } from "./doctor.js";
 // define patient schema
 const patientSchema = mongoose.Schema([
   {
@@ -6,6 +7,10 @@ const patientSchema = mongoose.Schema([
     phone: Number,
     age: Number,
     status: String,
+    created_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Doctor,
+    },
   },
 ]);
 

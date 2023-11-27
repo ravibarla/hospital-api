@@ -1,12 +1,15 @@
 import { Patient } from "../model/patient.js";
+import { getDoctorById } from "./doctorsController.js";
 
 export const register = (req, res) => {
-  const { name, phone, age,status } = req.body;
+  const { name, phone, age, status, created_by } = req.body;
+  console.log("created by doctor:", getDoctorById(created_by));
   const newPatient = new Patient({
     name,
     phone,
     age,
-    status
+    status,
+    created_by,
   });
   newPatient
     .save()
@@ -14,8 +17,20 @@ export const register = (req, res) => {
   return res.send(" registeration of doctor succesfully");
 };
 
-export const getPatients = (req, res) => {
-  Patient.find({}).then((patient) => res.status(200).send(patient));
+export const getPatients = async (req, res) => {
+  const patients = await Patient.find().populate("created_by", "username");
+  const formattedOutput = patients.map((patient) => {
+    return {
+      _id: patient._id,
+      name: patient.name,
+      age: patient.age,
+      created_by: {
+        _id: patient.created_by._id,
+        name: patient.created_by.username,
+      },
+    };
+  });
+  return res.json(formattedOutput);
 };
 
 export const remove = (req, res) => {
@@ -31,6 +46,4 @@ export const patientStatusReports = (req, res) => {
   Patient.find({ status }).then((patient) => res.send(patient));
 };
 
-export const createReport=(req,res)=>{
-    
-}
+export const createReport = (req, res) => {};
