@@ -22,7 +22,7 @@ export const register = (req, res) => {
     newPatient
       .save()
       .then(() => console.log("patient is registered succeffully"));
-    return res.send(" registeration of doctor succesfully");
+    return res.send(" registeration of patient succesfully");
   });
 };
 
@@ -39,8 +39,11 @@ export const remove = (req, res) => {
 };
 
 export const patientStatusReports = (req, res) => {
-  // const { status } = req.params;
-  // Patient.find({ }).then((patient) => patient.find());
+  const { status } = req.params;
+  // console.log(status)
+  Patient.find({ "report.vaccine_received": status }).then((patient) =>
+    res.send(patient)
+  );
 };
 
 export const createReport = (req, res) => {
