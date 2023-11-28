@@ -1,5 +1,7 @@
+import exp from "constants";
 import { Doctor } from "../model/doctor.js";
-
+import jwt from "jsonwebtoken";
+import { json } from "express";
 export const home = (req, res) => {
   return res.send("home");
 };
@@ -40,6 +42,33 @@ export const removeDoctor = (req, res) => {
 };
 
 export const login = (req, res) => {
+  // console.log("login")
+  const secretKey = "hello";
   const { username, password } = req.body;
-  console.log("username :", username, " password :", password);
+  // console.log("username :", username, " password :", password);
+  Doctor.findOne({ username }).then((doctor) => {
+    const doctorUser = doctor;
+    if (!doctorUser || doctorUser.password !== password) {
+      return res.status(200).send("incorrect user and password");
+    }
+    const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
+    res.send(token);
+  });
+};
+
+export const verifyToken = (req, res, next) => {
+  // console.log("header :",req.headers);
+  const secretKey = "hello";
+  const token = req.headers.authorization
+  if (!token||!token.startsWith("Bearer")) {
+    return res.status(403).json({ message: "Token is not provided" });
+  }
+  const formattedToken=token.split(" ")[1]
+  jwt.verify(formattedToken, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    req.username = decoded.username;
+    next();
+  });
 };
