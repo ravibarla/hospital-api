@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-// mongoose.connect(`mongodb://127.0.0.1:27017/doctor-api`);
-mongoose.connect(`mongodb+srv://ravibarla1:HyvvR8oZFMm88a0O@cluster0.mr8hpjk.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb://127.0.0.1:27017/hospital-api`);
+// mongoose.connect(`mongodb+srv://ravibarla1:5rxkaVCv0ezFeayg@cluster0.zcdgmle.mongodb.net/?retryWrites=true&w=majority`)
 
 export const db = mongoose.connection;
 
