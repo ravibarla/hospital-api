@@ -57,7 +57,7 @@ export const login = (req, res) => {
 };
 
 export const verifyToken = (req, res, next) => {
-  // console.log("header :",req.headers);
+  // console.log("verify token");
   const secretKey = "hello";
   const token = req.headers.authorization
   if (!token||!token.startsWith("Bearer")) {
@@ -69,6 +69,7 @@ export const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
     req.username = decoded.username;
+    // console.log("req.username :",req.username)
     next();
   });
 };

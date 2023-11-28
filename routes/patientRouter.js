@@ -3,6 +3,8 @@ import {
   getPatients,
   register,
   remove,
+  createReport,
+  getPatientReport
 } from "../controller/patientsController.js";
 import { verifyToken } from "../controller/doctorsController.js";
 
@@ -17,12 +19,12 @@ patientRouter.get(
   (req, res, next) => verifyToken(req, res, next),
   getPatients
 );
-// patientRouter.post("/:id", createReport);
+patientRouter.post("/:id/create_report", createReport);
 patientRouter.post(
   "/remove/:id",
   (req, res, next) => verifyToken(req, res, next),
   remove
 );
 
-// patientRouter.get("/:id/all_reports", getPatientReport);
+patientRouter.get("/:id/all_reports", getPatientReport);
 // patientRouter.get("/status", getPatient);

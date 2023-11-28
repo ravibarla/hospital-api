@@ -6,10 +6,22 @@ const patientSchema = mongoose.Schema([
     name: String,
     phone: Number,
     age: Number,
-    status: String,
-    created_by: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: Doctor,
+
+    report: {
+      created_by: {
+        id: { type: mongoose.Schema.Types.ObjectId, ref: Doctor },
+        doctorName: { type: String, ref: Doctor },
+      },
+      vaccine_received: {
+        type: String,
+        enum: ["YES", "NO"],
+      },
+      doses_completed: Number,
+      last_dose_date: String,
+      covid_status: {
+        type: String,
+        enum: ["POSITIVE", "NEGATIVE"],
+      },
     },
   },
 ]);
