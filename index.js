@@ -1,6 +1,7 @@
-import express,{urlencoded} from "express";
+import express, { urlencoded } from "express";
 import { router } from "./routes/index.js";
 import { db } from "./config/mongoose.js";
+import swaggerDocs from "./swagger.js";
 
 //create server
 const app = express();
@@ -13,3 +14,4 @@ app.use("/", router);
 app.listen(port, () => {
   console.log("app running in port :", port);
 });
+swaggerDocs(app,port)

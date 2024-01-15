@@ -24,6 +24,7 @@ export const registerDoctor = (req, res) => {
 };
 
 export const getDoctors = (req, res) => {
+  console.log("getdoctors")
   const doctors = Doctor.find({}).then((doctors) =>
     res.status(200).send(doctors)
   );
